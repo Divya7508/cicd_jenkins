@@ -1,5 +1,9 @@
 pipeline {
     agent any
+
+    environment {
+        SONARQUBE_SCANNER_TOOL = tool 'sonar_scanner';
+    }
     stages{
         stage('Checkout') {
             steps {
@@ -13,11 +17,13 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Code Analisys') {
             steps {
-                sh '''
-                    ls -lrt
-                '''
+                script {
+                    withSonarQubeEnv() {
+                        sh "${env.SONARQUBE_SCANNER_TOOL}/bin/sonar-scanner"
+                    }
+                }
             }
         }
     }
