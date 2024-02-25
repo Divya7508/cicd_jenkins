@@ -58,7 +58,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    buildImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}", "-f ${env.DOCKERFILE}")
+                    buildImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}", "-f ${env.DOCKERFILE} .")
                     docker.withRegistry('',"${env.REGISTRY_CREDS}") {
                         buildImage.push()
                     }
