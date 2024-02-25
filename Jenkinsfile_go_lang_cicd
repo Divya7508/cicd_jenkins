@@ -3,6 +3,10 @@ pipeline {
 
     environment {
         SONARQUBE_SCANNER_TOOL = tool 'sonar_scanner';
+        DOCKERFILE = './Dockerfile'
+        IMAGE_NAME = 'devopsitdefined/go_lang'
+        IMAGE_TAG = 'latest'
+        REGISTRY_CREDS = 'docker_devopsitdefined'
     }
     stages{
         stage('Checkout') {
@@ -38,6 +42,25 @@ pipeline {
                 script {
                     withSonarQubeEnv('sonar_server1') {
                         sh "${env.SONARQUBE_SCANNER_TOOL}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
+
+        stage('Build App') {
+            steps {
+                sh '''
+                    make clean build
+                '''
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                script {
+                    buildImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}", "-f ${env.DOCKERFILE}")
+                    docker.withRegistry('',"${env.REGISTRY_CREDS}") {
+                        buildImage.push()
                     }
                 }
             }
