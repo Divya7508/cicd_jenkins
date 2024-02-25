@@ -20,11 +20,12 @@ pipeline {
         stage('Code Analisys') {
             steps {
                 script {
-                    withSonarQubeEnv() {
+                    withSonarQubeEnv('sonar_server1') {
                         sh "${env.SONARQUBE_SCANNER_TOOL}/bin/sonar-scanner"
                     }
                 }
             }
         }
+
     }
 }
