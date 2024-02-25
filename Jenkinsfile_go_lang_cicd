@@ -17,6 +17,14 @@ pipeline {
             }
         }
 
+         stage('Testing') {
+            steps {
+                sh '''
+                    make clean test-backend
+                '''
+            }
+        }
+
         stage('Code Analisys') {
             steps {
                 script {
