@@ -17,7 +17,15 @@ pipeline {
             }
         }
 
-         stage('Testing') {
+        stage('Linting') {
+            steps {
+                sh '''
+                    make clean lint
+                '''
+            }
+        }
+
+        stage('Testing') {
             steps {
                 sh '''
                     make clean test-backend
