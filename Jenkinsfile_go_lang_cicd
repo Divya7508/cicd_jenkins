@@ -16,7 +16,7 @@ pipeline {
                     branches: [[name: '*/main']],
                     doGenerateSubmoduleConfigurations: false,
                     submoduleCfg: [],
-                    userRemoteConfigs: [[credentialsId: 'git_hub', url: 'https://github.com/jaintpharsha/go_lang.git']]
+                    userRemoteConfigs: [[credentialsId: 'git_hub', url: 'https://github.com/Divya7508/go_lang.git']]
                 ])
             }
         }
